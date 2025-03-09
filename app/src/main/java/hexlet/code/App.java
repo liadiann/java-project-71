@@ -20,7 +20,11 @@ public class App implements Runnable {
 
 	@Override
 	public void run() {
-		System.out.println("Hello");
+		try {
+			System.out.println(Differ.generate(filepath1, filepath2));
+		} catch (Exception e) {
+			System.out.println("!!!");
+		}
 	}
 
 	public static void main(String[] args) {
