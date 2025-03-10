@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 public class Differ {
 
@@ -22,8 +24,31 @@ public class Differ {
 	public static String generate(String filepath1, String filepath2) throws Exception {
 		var json1 = readFile(filepath1);
 		var mapJson1 = parse(json1);
+		var sortedMap1 = new TreeMap<String, Object>(mapJson1);
 		var json2 = readFile(filepath2);
 		var mapJson2 = parse(json2);
-		return json2;
+		var sortedMap2 = new TreeMap<String, Object>(mapJson2);
+		var keys = new TreeSet<String>(sortedMap1.keySet());
+		keys.addAll(sortedMap2.keySet());
+		var result = new StringBuilder("{\n");
+		keys.forEach(key -> {
+			if (!sortedMap2.containsKey(key)) {
+				var tmp = "  - " + key + ": " + sortedMap1.get(key) + "\n";
+				result.append(tmp);
+			} else if (!sortedMap1.containsKey(key)) {
+				var tmp = "  + " + key + ": " + sortedMap2.get(key) + "\n";
+				result.append(tmp);
+			} else if (sortedMap1.get(key).equals(sortedMap2.get(key))) {
+				var tmp = "    " + key + ": " + sortedMap1.get(key) + "\n";
+				result.append(tmp);
+			} else {
+				var tmp = "  - " + key + ": " + sortedMap1.get(key) + "\n";
+				result.append(tmp);
+				tmp = "  + " + key + ": " + sortedMap2.get(key) + "\n";
+				result.append(tmp);
+			}
+		});
+		result.append("}");
+		return result.toString();
 	}
 }
