@@ -11,7 +11,7 @@ import java.util.TreeSet;
 
 public class Differ {
 
-    private static String readFile(String filename) throws Exception {
+    public static String readFile(String filename) throws Exception {
         var path = Paths.get("src", "test", "resources", filename).toAbsolutePath().normalize();
         return Files.readString(path).trim();
     }
