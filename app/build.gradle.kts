@@ -4,6 +4,7 @@ plugins {
     id("se.patrikerdes.use-latest-versions") version "0.2.18"
     application
     checkstyle
+    jacoco
 }
 
 group = "hexlet.code"
@@ -27,3 +28,4 @@ application {
 tasks.test {
     useJUnitPlatform()
 }
+tasks.jacocoTestReport { reports { xml.required.set(true) } }
