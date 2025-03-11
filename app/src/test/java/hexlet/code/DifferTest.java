@@ -10,12 +10,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DifferTest {
 
-	private static String expected;
+    private static String expected;
 
-	@BeforeAll
-	public static void beforeAll() throws Exception {
-		expected = readFile("result");
-	}
+    @BeforeAll
+    public static void beforeAll() throws Exception {
+        expected = readFile("result");
+    }
 
     private static String readFile(String filename) throws Exception {
         var path = Paths.get("src", "test", "resources", filename).toAbsolutePath().normalize();
@@ -30,11 +30,11 @@ public class DifferTest {
         assertEquals(expected, actual);
     }
 
-	@Test
-	public void testCompareYml() throws Exception {
-		var filename1 = "file1.yaml";
-		var filename2 = "file2.yaml";
-		var actual = Differ.generate(filename1, filename2);
-		assertEquals(expected, actual);
-	}
+    @Test
+    public void testCompareYml() throws Exception {
+        var filename1 = "file1.yaml";
+        var filename2 = "file2.yaml";
+        var actual = Differ.generate(filename1, filename2);
+        assertEquals(expected, actual);
+    }
 }
