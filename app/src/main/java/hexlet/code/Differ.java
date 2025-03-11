@@ -2,12 +2,13 @@ package hexlet.code;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Map;
-import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.Map;
+import java.util.LinkedHashMap;
 
 public class Differ {
 
@@ -24,33 +25,26 @@ public class Differ {
     public static String generate(String filepath1, String filepath2) throws Exception {
         var json1 = readFile(filepath1);
         var mapJson1 = parse(json1);
-        var sortedMap1 = new TreeMap<>(mapJson1);
-
         var json2 = readFile(filepath2);
         var mapJson2 = parse(json2);
-        var sortedMap2 = new TreeMap<>(mapJson2);
-
-        var keys = new TreeSet<>(sortedMap1.keySet());
-        keys.addAll(sortedMap2.keySet());
-        var result = new StringBuilder("{\n");
+        var sortedMap = new LinkedHashMap<String, Object>();
+        var keys = new TreeSet<>(mapJson1.keySet());
+        keys.addAll(mapJson2.keySet());
         keys.forEach(key -> {
-            if (!sortedMap2.containsKey(key)) {
-                var tmp = "  - " + key + ": " + sortedMap1.get(key) + "\n";
-                result.append(tmp);
-            } else if (!sortedMap1.containsKey(key)) {
-                var tmp = "  + " + key + ": " + sortedMap2.get(key) + "\n";
-                result.append(tmp);
-            } else if (sortedMap1.get(key).equals(sortedMap2.get(key))) {
-                var tmp = "    " + key + ": " + sortedMap1.get(key) + "\n";
-                result.append(tmp);
+            if (!mapJson2.containsKey(key)) {
+                sortedMap.put("- " + key, mapJson1.get(key));
+            } else if (!mapJson1.containsKey(key)) {
+                sortedMap.put("+ " + key, mapJson2.get(key));
+            } else if (mapJson1.get(key).equals(mapJson2.get(key))) {
+                sortedMap.put("  " + key, mapJson1.get(key));
             } else {
-                var tmp = "  - " + key + ": " + sortedMap1.get(key) + "\n";
-                result.append(tmp);
-                tmp = "  + " + key + ": " + sortedMap2.get(key) + "\n";
-                result.append(tmp);
+                sortedMap.put("- " + key, mapJson1.get(key));
+                sortedMap.put("+ " + key, mapJson2.get(key));
             }
         });
-        result.append("}");
-        return result.toString();
+        var objectMapper = new ObjectMapper();
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        return objectMapper.writeValueAsString(sortedMap).replace(",", "")
+                .replace("\"", "").replace(" :", ":");
     }
 }
