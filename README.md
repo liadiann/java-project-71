@@ -7,3 +7,5 @@
 Пример запуска сравнения json файлов: [asciinema](https://asciinema.org/a/ndWCfLdXn5YEBTKMwZeepeazE)
 ####
 Пример запуска сравнения json и yaml файлов: [asciinema](https://asciinema.org/a/hdVDyIsd6QfAMsgy5e1v4vOnj)
+####
+Пример запуска сравнения файлов со вложенными структурами: [asciinema](https://asciinema.org/a/kscUYObEi71vltH93tSmr4hqj)
