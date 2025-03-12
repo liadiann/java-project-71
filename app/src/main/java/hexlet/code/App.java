@@ -12,7 +12,7 @@ public class App implements Callable<Integer> {
 
     @Option(names = {"-f", "--format"}, paramLabel = "format",
             description = "output format [default: stylish]", defaultValue = "stylish")
-    private String format = "stylish";
+    private String formatter;
 
     @Parameters(index = "0", paramLabel = "filepath1", description = "path to first file")
     private String filepath1;
@@ -22,7 +22,7 @@ public class App implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        var str = Differ.generate(filepath1, filepath2);
+        var str = Differ.generate(filepath1, filepath2, formatter);
         System.out.println(str);
         return 0;
     }
