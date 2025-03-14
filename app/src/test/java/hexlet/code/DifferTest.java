@@ -12,11 +12,13 @@ public class DifferTest {
 
     private static String expectedStylish;
     private static String expectedPlain;
+    private static String expectedJson;
 
     @BeforeAll
     public static void beforeAll() throws Exception {
         expectedStylish = readFile("resultStylish");
         expectedPlain = readFile("resultPlain");
+        expectedJson = readFile("resultJson");
     }
 
     private static String readFile(String filename) throws Exception {
@@ -32,6 +34,8 @@ public class DifferTest {
         assertEquals(expectedStylish, actual);
         actual = Differ.generate(filename1, filename2, "plain");
         assertEquals(expectedPlain, actual);
+        actual = Differ.generate(filename1, filename2, "json");
+        assertEquals(expectedJson, actual);
     }
 
     @Test
@@ -42,5 +46,7 @@ public class DifferTest {
         assertEquals(expectedStylish, actual);
         actual = Differ.generate(filename1, filename2, "plain");
         assertEquals(expectedPlain, actual);
+        actual = Differ.generate(filename1, filename2, "json");
+        assertEquals(expectedJson, actual);
     }
 }
