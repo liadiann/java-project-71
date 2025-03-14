@@ -22,7 +22,7 @@ public class DifferTest {
     }
 
     private static String readFile(String filename) throws Exception {
-        var path = Paths.get("src", "test", "resources", filename).toAbsolutePath().normalize();
+        var path = Paths.get("src", "test", "resources", "fixtures", filename).toAbsolutePath().normalize();
         return Files.readString(path).trim();
     }
 
