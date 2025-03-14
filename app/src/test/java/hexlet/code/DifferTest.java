@@ -22,6 +22,9 @@ public class DifferTest {
     }
 
     private static String readFile(String filename) throws Exception {
+        if (Paths.get(filename).isAbsolute()) {
+            return Files.readString(Paths.get(filename).normalize()).trim();
+        }
         var path = Paths.get("src", "test", "resources", "fixtures", filename).toAbsolutePath().normalize();
         return Files.readString(path).trim();
     }
