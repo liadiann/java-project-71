@@ -10,11 +10,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DifferTest {
 
-    private static String expected;
+    private static String expectedStylish;
+    private static String expectedPlain;
 
     @BeforeAll
     public static void beforeAll() throws Exception {
-        expected = readFile("result");
+        expectedStylish = readFile("resultStylish");
+        expectedPlain = readFile("resultPlain");
     }
 
     private static String readFile(String filename) throws Exception {
@@ -27,14 +29,18 @@ public class DifferTest {
         var filename1 = "file1.json";
         var filename2 = "file2.json";
         var actual = Differ.generate(filename1, filename2);
-        assertEquals(expected, actual);
+        assertEquals(expectedStylish, actual);
+        actual = Differ.generate(filename1, filename2, "plain");
+        assertEquals(expectedPlain, actual);
     }
 
     @Test
     public void testCompareYml() throws Exception {
         var filename1 = "file1.yaml";
         var filename2 = "file2.yaml";
-        var actual = Differ.generate(filename1, filename2);
-        assertEquals(expected, actual);
+        var actual = Differ.generate(filename1, filename2, "stylish");
+        assertEquals(expectedStylish, actual);
+        actual = Differ.generate(filename1, filename2, "plain");
+        assertEquals(expectedPlain, actual);
     }
 }
