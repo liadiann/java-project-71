@@ -21,7 +21,7 @@ public class App implements Callable<Integer> {
     private String filepath2;
 
     @Override
-    public Integer call() throws Exception {
+    public final Integer call() throws Exception {
         var str = Differ.generate(filepath1, filepath2, formatter);
         System.out.println(str);
         return 0;
