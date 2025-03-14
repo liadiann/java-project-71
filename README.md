@@ -11,3 +11,5 @@
 Пример запуска сравнения файлов со вложенными структурами: [asciinema](https://asciinema.org/a/kscUYObEi71vltH93tSmr4hqj)
 ####
 Пример запуска сравнения файлов в формате plain: [asciinema](https://asciinema.org/a/4xqQJdIOdCQJN4dhYfVw87K34)
+####
+Пример запуска сравнения файлов в формате json: [asciinema](https://asciinema.org/a/jkag7fi85tvEHYVnJhT7WTRte)
