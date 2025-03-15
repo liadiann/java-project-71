@@ -11,7 +11,7 @@ public class Formatter {
             case "stylish" -> StylishFormatter.formatIt(map);
             case "plain" -> PlainFormatter.formatIt(map);
             case "json" -> JsonFormatter.formatIt(map);
-            default -> "error";
+            default -> throw new Exception("wrong format");
         };
     }
 }
