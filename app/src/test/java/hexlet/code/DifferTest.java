@@ -1,7 +1,8 @@
 package hexlet.code;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -28,24 +29,15 @@ public class DifferTest {
         var path = Paths.get("src", "test", "resources", "fixtures", filename).toAbsolutePath().normalize();
         return Files.readString(path).trim();
     }
-
-    @Test
-    public void testCompareJson() throws Exception {
-        var filename1 = "file1.json";
-        var filename2 = "file2.json";
+    @ParameterizedTest
+    @CsvSource(value = {
+            "file1.json, file2.json",
+            "file1.yaml, file2.yaml"
+    })
+    public void testCompareJson(String filename1, String filename2) throws Exception {
         var actual = Differ.generate(filename1, filename2);
         assertEquals(expectedStylish, actual);
-        actual = Differ.generate(filename1, filename2, "plain");
-        assertEquals(expectedPlain, actual);
-        actual = Differ.generate(filename1, filename2, "json");
-        assertEquals(expectedJson, actual);
-    }
-
-    @Test
-    public void testCompareYml() throws Exception {
-        var filename1 = "file1.yaml";
-        var filename2 = "file2.yaml";
-        var actual = Differ.generate(filename1, filename2, "stylish");
+        actual = Differ.generate(filename1, filename2, "stylish");
         assertEquals(expectedStylish, actual);
         actual = Differ.generate(filename1, filename2, "plain");
         assertEquals(expectedPlain, actual);
