@@ -1,7 +1,7 @@
 package hexlet.code.formatters;
 
 import java.util.Map;
-import hexlet.code.ValueForMap;
+import hexlet.code.InternalRepresentationOfTheDiff;
 
 public class StylishFormatter {
 
@@ -14,9 +14,9 @@ public class StylishFormatter {
         };
     }
 
-    public static String formatIt(Map<String, ValueForMap> map) {
+    public static String formatIt(Map<String, InternalRepresentationOfTheDiff> diff) {
         var res = new StringBuilder("{\n");
-        map.forEach((k, v) -> {
+        diff.forEach((k, v) -> {
             res.append(" ".repeat(2));
             var condition = definePrefix(v.getCondition());
             if (condition.equals("-+")) {

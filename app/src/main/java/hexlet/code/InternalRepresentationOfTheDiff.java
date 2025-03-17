@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.AllArgsConstructor;
 @Getter
 @AllArgsConstructor
-public class ValueForMap {
+public class InternalRepresentationOfTheDiff {
 
     private final String condition;
     private final Object oldValue;

@@ -6,22 +6,28 @@ import java.util.TreeSet;
 
 public class FormationDiff {
 
-    public static LinkedHashMap<String, ValueForMap> calculateDiff(Map<String, Object> map1, Map<String, Object> map2) {
-        var sortedMap = new LinkedHashMap<String, ValueForMap>();
-        var keys = new TreeSet<>(map1.keySet());
-        keys.addAll(map2.keySet());
+    public static LinkedHashMap<String, InternalRepresentationOfTheDiff> calculate(
+            Map<String, Object> parsedFileContent1, Map<String, Object> parsedFileContent2) {
+        var diff = new LinkedHashMap<String, InternalRepresentationOfTheDiff>();
+        var keys = new TreeSet<>(parsedFileContent1.keySet());
+        keys.addAll(parsedFileContent2.keySet());
         keys.forEach(key -> {
-            if (!map2.containsKey(key)) {
-                sortedMap.put(key, new ValueForMap("deleted", map1.get(key), null));
-            } else if (!map1.containsKey(key)) {
-                sortedMap.put(key, new ValueForMap("added", map2.get(key), map2.get(key)));
-            } else if (map1.get(key) == (map2.get(key)) || (map1.get(key) != null
-                    && map2.get(key) != null && map1.get(key).equals(map2.get(key)))) {
-                sortedMap.put(key, new ValueForMap("unchanged", map1.get(key), map1.get(key)));
+            if (!parsedFileContent2.containsKey(key)) {
+                diff.put(key, new InternalRepresentationOfTheDiff("deleted",
+                        parsedFileContent1.get(key), null));
+            } else if (!parsedFileContent1.containsKey(key)) {
+                diff.put(key, new InternalRepresentationOfTheDiff("added",
+                        parsedFileContent2.get(key), parsedFileContent2.get(key)));
+            } else if (parsedFileContent1.get(key) == (parsedFileContent2.get(key))
+                    || (parsedFileContent1.get(key) != null && parsedFileContent2.get(key) != null
+                    && parsedFileContent1.get(key).equals(parsedFileContent2.get(key)))) {
+                diff.put(key, new InternalRepresentationOfTheDiff("unchanged",
+                        parsedFileContent1.get(key), parsedFileContent1.get(key)));
             } else {
-                sortedMap.put(key, new ValueForMap("changed", map1.get(key), map2.get(key)));
+                diff.put(key, new InternalRepresentationOfTheDiff("changed", parsedFileContent1.get(key),
+                        parsedFileContent2.get(key)));
             }
         });
-        return sortedMap;
+        return diff;
     }
 }

@@ -1,6 +1,6 @@
 package hexlet.code.formatters;
 
-import hexlet.code.ValueForMap;
+import hexlet.code.InternalRepresentationOfTheDiff;
 import java.util.List;
 import java.util.Map;
 
@@ -12,9 +12,9 @@ public class PlainFormatter {
     private static final String WAS_ADDED = "was added with value: ";
     private static final String WAS_DELETED = "was removed";
 
-    public static String formatIt(Map<String, ValueForMap> map) {
+    public static String formatIt(Map<String, InternalRepresentationOfTheDiff> diff) {
         var res = new StringBuilder();
-        map.forEach((k, v) -> {
+        diff.forEach((k, v) -> {
             var condition = v.getCondition();
             if (!condition.equals("unchanged")) {
                 res.append(PROPERTY).append("'").append(k).append("' ");
@@ -50,9 +50,9 @@ public class PlainFormatter {
         return "" + value;
     }
 
-    private static void appendUpdate(StringBuilder str, Object oldValue, Object newValue) {
+    private static void appendUpdate(StringBuilder sentence, Object oldValue, Object newValue) {
         oldValue = createStringValue(oldValue);
         newValue = createStringValue(newValue);
-        str.append(WAS_UPDATED).append("From ").append(oldValue).append(" to ").append(newValue).append("\n");
+        sentence.append(WAS_UPDATED).append("From ").append(oldValue).append(" to ").append(newValue).append("\n");
     }
 }
